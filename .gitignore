@@ -1,0 +1,36 @@
+# ── Personal artifacts (keep local, never push) ──────────────────────────────
+
+# Resumes and cover letters (all formats)
+*.docx
+*.pdf
+*.doc
+
+# Tailored resumes and cover letters in application folders
+applications/*/[Rr]esume*
+applications/*/[Cc]over*
+applications/*/*.docx
+applications/*/*.pdf
+
+# Performance reviews
+reference/performance-reviews/
+
+# Raw recruiter emails (may contain personal info)
+recruiters/*.md
+
+# ── OS / editor noise ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# LibreOffice temp files
+.~lock.*
+*.tmp
+~$*
+
+# ── What IS tracked ──────────────────────────────────────────────────────────
+# Everything else: AGENT.md, memory/*.md, skills/**/*.md, applications/_template/,
+# scheduled/, job-postings/ (scan outputs are fine to track), reference/research/
