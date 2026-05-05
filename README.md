@@ -1,4 +1,4 @@
-# job-search-agent
+# Job Search Agent
 
 An AI-native job search workspace. Drop it in a folder, point your AI agent at it, and get a system that handles the entire job search loop: daily scanning, resume tailoring, cover letter drafting, recruiter replies, interview prep, and application tracking — all in your voice, grounded in your real experience.
 
