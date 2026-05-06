@@ -31,7 +31,7 @@ Read the five files above. Build a working list of:
 - **Target companies** to check directly (Tier 1 → Tier 2 → Tier 3)
 - **Role keywords** to filter for (from `memory/target-roles.md`)
 - **Already-applied** companies/roles to skip
-- **Seen URLs** — the full set of URLs from `job-postings/seen.md`. Any posting whose URL appears in this set is suppressed for this scan (silently — don't mention skipped-due-to-seen URLs in the inbox file).
+- **Seen URLs** — the full set of URLs from `job-postings/seen.md`. Any posting whose URL appears in this set is suppressed for this scan (silently — don't mention skipped-due-to-seen URLs in the inbox file), unless the re-surface rule applies (see Step 2). Rows rated `Suppressed` are always skipped with no re-surface exception.
 
 ### 2. Search
 Use web search (or direct fetch on specific careers pages) to find new postings. Prioritize:
@@ -41,7 +41,9 @@ Use web search (or direct fetch on specific careers pages) to find new postings.
 - LinkedIn search for the role keywords from `memory/target-roles.md`
 
 For each posting discovered, first check its URL against the seen set loaded in Step 1:
-- **If the URL is in `job-postings/seen.md`:** check the "Date first seen" column. If ≤30 days ago, skip silently. If >30 days ago and the original rating was Low or Medium, include it in the inbox as a `(re-surfaced)` posting with a note that it was previously seen — don't skip it forever.
+- **If the URL is in `job-postings/seen.md` with rating `Suppressed`:** skip silently, always — no re-surface exception.
+- **If the URL is in `job-postings/seen.md` with rating `High`:** skip silently.
+- **If the URL is in `job-postings/seen.md` with rating `Low` or `Medium`:** check the "Date last surfaced" column. If ≤30 days ago, skip silently. If >30 days ago, include it in the inbox as a `(re-surfaced)` posting with a note that it was previously seen, then update its "Date last surfaced" in `seen.md` to today so it won't reappear for another 30 days.
 - **If the URL is new:** proceed to scoring.
 
 For each posting consider:
@@ -96,12 +98,15 @@ _Scan run at HH:MM. N new postings found across M companies checked._
 ```
 
 ### 5. Update seen.md
-After writing the inbox file, append one row to `job-postings/seen.md` for each URL that was included in the digest (High, Medium, or Low rated). Do **not** add rows for Skip-rated postings — they were never shown to the user and don't need to be tracked.
+After writing the inbox file, update `job-postings/seen.md` for each URL included in the digest (High, Medium, or Low rated). Do **not** add rows for Skip-rated postings — they were never shown to the user and don't need to be tracked.
 
-Format:
+- **If the URL already has a row:** update the `Date last surfaced` field to today's date only (leave `Date first seen` and all other fields unchanged).
+- **If the URL is new:** append one row using this format:
+
 ```
-| [url] | [Company] | [Role title] | YYYY-MM-DD | [High / Medium / Low] |
+| [url] | [Company] | [Role title] | YYYY-MM-DD | YYYY-MM-DD | [High / Medium / Low / Suppressed] |
 ```
+(first date = Date first seen = today; second date = Date last surfaced = today)
 
 ### 6. Don't update applications-log.md
 Scanning ≠ applying. Only the `log-application` skill writes to that log.
@@ -109,7 +114,7 @@ Scanning ≠ applying. Only the `log-application` skill writes to that log.
 ## Things to avoid
 
 - **Don't list every posting at every company.** This is a curated digest, not a dump. If 12 new postings dropped at a company, surface the 2 that fit. Mention the rest as a one-liner if interesting.
-- **Don't re-surface postings already in `seen.md`** (unless the re-surface rule applies — >30 days old, Low/Medium rating). Do not diff against yesterday's inbox file; `seen.md` is the authoritative dedup source.
+- **Don't re-surface postings already in `seen.md`** unless the re-surface rule applies (`Date last surfaced` >30 days ago, Low/Medium rating). When a posting is re-surfaced, always update its `Date last surfaced` in `seen.md` so it doesn't reappear the next day. Do not diff against yesterday's inbox file; `seen.md` is the authoritative dedup source.
 - **Don't fabricate.** If you can't reach a careers page, say so. If a posting's level is unclear, mark it Medium and say why.
 - **Don't recommend roles that violate the deal-breakers in `memory/target-roles.md`.**
 
