@@ -50,6 +50,26 @@ These are the files the agent reads to understand who you are and what you want.
 | `memory/target-companies.md` | Companies organized by how much you want to work there |
 | `memory/voice-and-style.md` | Your writing voice rules, distilled from your best cover letter |
 
+### 3a. Install Python dependencies
+
+The resume tailoring and cover letter skills use Python to edit `.docx` files and verify PDF page count.
+
+```bash
+pip install -r requirements.txt
+```
+
+You also need **LibreOffice** for `.docx` → PDF conversion:
+
+```bash
+# macOS
+brew install --cask libreoffice
+
+# Linux (Debian/Ubuntu)
+sudo apt install libreoffice
+```
+
+> **No LibreOffice?** The skills will still produce `.docx` files — just convert them to PDF manually before submitting. Everything else works fine.
+
 ### 4. Add your master resume
 
 Put your current resume in `resumes/master/`. This is the baseline for all tailoring — it's never edited in place.

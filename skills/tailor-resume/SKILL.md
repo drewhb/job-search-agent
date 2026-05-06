@@ -14,6 +14,16 @@ description: Rework the master resume against a specific job description. Reorde
 - `memory/about-me.md` — full project list, ground-truth for accomplishments
 - `reference/performance-reviews/` — for additional context if available
 
+## Prerequisites
+
+Before running any steps, confirm the required Python packages are installed:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs `python-docx` (for `.docx` editing) and `pdfplumber` (for page count verification). LibreOffice is also required for PDF conversion — see `README.md` step 3a for install instructions. If LibreOffice is absent, follow the fallback noted in Step 5 below.
+
 ## Procedure
 
 ### 1. Set up the application folder
@@ -88,6 +98,7 @@ doc.save('applications/[Company]_[Role]/YourName_Resume_[Company].docx')
 
 - Save the tailored `.docx` as `applications/[Company]_[Role]/YourName_Resume_[Company].docx`
 - Convert to PDF: `libreoffice --headless --convert-to pdf <docx>` (or `soffice` on macOS). Save as `YourName_Resume_[Company].pdf` in the same folder.
+  - **If LibreOffice is not installed:** skip PDF conversion and tell the user: *"PDF conversion skipped — LibreOffice not found. Convert `[filename].docx` to PDF manually before submitting. See `README.md` step 3a for install instructions."* Do not fail or abort the rest of the workflow.
 - **Verify page count = 1.** Count pages with `pdfplumber` or `pypdf`:
   ```python
   import pdfplumber

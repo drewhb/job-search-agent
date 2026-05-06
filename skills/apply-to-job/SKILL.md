@@ -15,6 +15,8 @@ This is the **primary entry point** when the user has decided to apply to a spec
 
 ## Before you start — gather inputs
 
+> **Preflight check:** Steps 2 and 3 use Python to generate `.docx` files. If `python-docx` is not installed, they will fail silently. Run `pip install -r requirements.txt` before proceeding if you haven't already (see `README.md` step 3a).
+
 You need exactly one of:
 - A **URL** to the job posting → fetch it and extract the JD text
 - The **full pasted JD text** in chat

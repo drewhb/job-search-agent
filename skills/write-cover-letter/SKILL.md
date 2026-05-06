@@ -15,6 +15,16 @@ description: Draft a cover letter for a specific job in the user's voice. Anchor
 - `memory/about-me.md` — project list to draw from
 - The tailored resume (if one exists yet) — for consistency in framing
 
+## Prerequisites
+
+Before running any steps, confirm the required Python packages are installed:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs `python-docx` (for `.docx` generation). LibreOffice is also required for the PDF conversion in Step 4 — see `README.md` step 3a for install instructions. If LibreOffice is absent, produce the `.docx` only and note this for the user.
+
 ## Procedure
 
 ### 1. Re-read the sample cover letter
@@ -47,6 +57,7 @@ Open with a sentence that maps to *this company's* specific pitch — what makes
 ### 4. Save output
 - Write the letter as a `.docx` (use `python-docx`) and save as `applications/[Company]_[Role]/[Company]_CoverLetter.docx`
 - Convert to PDF and save as `[Company]_CoverLetter.pdf` in the same folder
+  - **If LibreOffice is not installed:** skip PDF conversion and tell the user: *"PDF conversion skipped — LibreOffice not found. Convert `[Company]_CoverLetter.docx` to PDF manually before submitting."*
 - Match the sample's basic formatting: standard business letter, "Dear [Company] Hiring Team," opener, sign-off with the user's full name
 
 ### 5. Self-review before handing off
