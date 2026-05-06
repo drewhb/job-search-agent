@@ -76,7 +76,7 @@ job-search-agent/
 │       └── notes.md
 ├── job-postings/
 │   ├── inbox/                     # daily scan output (dated markdown files)
-│   └── triaged/                   # postings you've decided on (yes/no/later)
+│   ├── triaged/                   # postings you've decided on (yes/no/later)
 │   └── seen.md                    # persistent registry of already-surfaced posting URLs
 ├── recruiters/                    # raw recruiter emails / outreach (paste here)
 ├── reference/
