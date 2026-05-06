@@ -1,0 +1,16 @@
+# Python dependencies for job-search-agent
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# Also required (system package — not pip-installable):
+#   LibreOffice — used to convert .docx files to PDF
+#     macOS:  brew install --cask libreoffice
+#     Linux:  sudo apt install libreoffice
+#
+# If LibreOffice is not available, the tailor-resume and write-cover-letter
+# skills will produce .docx files only. Convert to PDF manually before
+# submitting. Everything else in the workflow still functions normally.
+
+python-docx>=1.1.0   # .docx read/write for resume and cover letter generation
+pdfplumber>=0.11.0   # page count verification after PDF conversion

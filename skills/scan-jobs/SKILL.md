@@ -22,15 +22,16 @@ If no new postings worth surfacing exist, write a short file noting that — don
 - `memory/target-companies.md` — the curated company list, by tier
 - `memory/target-roles.md` — role types, level, deal-breakers
 - `memory/applications-log.md` — so you don't surface roles already applied to
-- The previous day's scan in `job-postings/inbox/` (if any) — so you don't repeat
+- `job-postings/seen.md` — registry of every URL already surfaced in a prior digest; use this as the authoritative dedup source
 
 ## Procedure
 
 ### 1. Load context
-Read the four files above. Build a working list of:
+Read the five files above. Build a working list of:
 - **Target companies** to check directly (Tier 1 → Tier 2 → Tier 3)
 - **Role keywords** to filter for (from `memory/target-roles.md`)
 - **Already-applied** companies/roles to skip
+- **Seen URLs** — the full set of URLs from `job-postings/seen.md`. Any posting whose URL appears in this set is suppressed for this scan (silently — don't mention skipped-due-to-seen URLs in the inbox file).
 
 ### 2. Search
 Use web search (or direct fetch on specific careers pages) to find new postings. Prioritize:
@@ -38,6 +39,10 @@ Use web search (or direct fetch on specific careers pages) to find new postings.
 - The job boards listed in `memory/target-companies.md`
 - Early-stage boards (Wellfound, YC Work at a Startup, relevant portfolio pages)
 - LinkedIn search for the role keywords from `memory/target-roles.md`
+
+For each posting discovered, first check its URL against the seen set loaded in Step 1:
+- **If the URL is in `job-postings/seen.md`:** check the "Date first seen" column. If ≤30 days ago, skip silently. If >30 days ago and the original rating was Low or Medium, include it in the inbox as a `(re-surfaced)` posting with a note that it was previously seen — don't skip it forever.
+- **If the URL is new:** proceed to scoring.
 
 For each posting consider:
 - Is the role level a fit? (within the experience range in `memory/target-roles.md`)
@@ -90,13 +95,21 @@ _Scan run at HH:MM. N new postings found across M companies checked._
 (Briefly: companies checked with no new relevant postings.)
 ```
 
-### 5. Don't update applications-log.md
+### 5. Update seen.md
+After writing the inbox file, append one row to `job-postings/seen.md` for each URL that was included in the digest (High, Medium, or Low rated). Do **not** add rows for Skip-rated postings — they were never shown to the user and don't need to be tracked.
+
+Format:
+```
+| [url] | [Company] | [Role title] | YYYY-MM-DD | [High / Medium / Low] |
+```
+
+### 6. Don't update applications-log.md
 Scanning ≠ applying. Only the `log-application` skill writes to that log.
 
 ## Things to avoid
 
 - **Don't list every posting at every company.** This is a curated digest, not a dump. If 12 new postings dropped at a company, surface the 2 that fit. Mention the rest as a one-liner if interesting.
-- **Don't surface the same posting two days in a row** unless something changed. Diff against yesterday's file.
+- **Don't re-surface postings already in `seen.md`** (unless the re-surface rule applies — >30 days old, Low/Medium rating). Do not diff against yesterday's inbox file; `seen.md` is the authoritative dedup source.
 - **Don't fabricate.** If you can't reach a careers page, say so. If a posting's level is unclear, mark it Medium and say why.
 - **Don't recommend roles that violate the deal-breakers in `memory/target-roles.md`.**
 
