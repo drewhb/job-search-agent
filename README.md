@@ -116,6 +116,8 @@ See `scheduled/daily-job-scan.md` for instructions on setting up the morning dig
 **Prep for an interview:**
 > "I have a [recruiter screen / hiring manager call / onsite] at [Company] — help me prep."
 
+<img width="1176" height="753" alt="image" src="https://github.com/user-attachments/assets/baf6b742-05ab-4980-ba51-d536af66b3a6" />
+
 ---
 
 ## The skills
